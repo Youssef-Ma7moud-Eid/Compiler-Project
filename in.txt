@@ -1,0 +1,38 @@
+void main() {
+    // Declaring 
+    int x;
+    // Declaring and Initializing
+    int y = - 8 - 5  ;
+              
+    x = !5;
+    print(!x);
+    x =  x *  ( 2  + 10 ) ;
+    
+    print (x);
+
+    y = 0 || 1;
+   
+    print(y);
+    
+
+    5/0;
+
+
+    if(y >0 ){
+     5>6;
+    }
+    if(y==1){
+        4<9;
+    }
+    else if (5>0)
+    {
+        6||0;
+    }
+    else if(9<0)
+    {
+        !5;
+    }
+   else{
+ 1||5;
+}
+}

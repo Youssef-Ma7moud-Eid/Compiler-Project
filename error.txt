@@ -1,0 +1,3 @@
+=== Error Log ===
+
+Line 18: Division by zero
