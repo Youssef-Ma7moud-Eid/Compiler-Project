@@ -3,7 +3,6 @@
 This repository contains a complete compiler project built using **Flex** for lexical analysis and **Bison** for parsing. The compiler processes a Dart-like programming language, handling variable declarations, assignments, arithmetic/logical operations, control flow structures, and error reporting.
 
 ## 📁 Project Structure
-.
 ├── compiler.exe # Compiled executable
 ├── error.txt # Error output file
 ├── flex.l # Flex lexical analyzer rules
