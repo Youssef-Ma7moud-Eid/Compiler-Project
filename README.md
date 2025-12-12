@@ -23,12 +23,12 @@ This repository contains a complete compiler project built using **Flex** for le
 
 3.   **Compile the compiler:**
      ```bash
-     gcc -o compiler.exe parser.tab.c lex.yy.c -lm
+     gcc parser.tab.c lex.yy.c -o compiler
       Output: compiler.exe
 
 4. **Running the Compiler**
     ```bash
-    ./compiler.exe
+    ./compiler
     
  ##  📂 Project Structure
   ```css
