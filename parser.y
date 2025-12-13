@@ -12,13 +12,14 @@ FILE *out;
 FILE *err;
 int sym[26];
 int sym_declared[26];
+int sym_type[26]; // 0=int, 1=float, 2=double
 
 void write_error(const char *msg);
 %}
 
-%token VOID MAIN INT PRINT IF ELSE
+%token VOID MAIN INT FLOAT DOUBLE PRINT IF ELSE
 %token EQ NE GT LT GE LE AND OR
-%token VARIABLE NUMBER
+%token VARIABLE NUMBER FLOAT_NUM DOUBLE_NUM
 
 %right '='
 %left OR
@@ -66,22 +67,64 @@ declaration:
     {
         sym[$2] = 0;
         sym_declared[$2] = 1;
+        sym_type[$2] = 0;
         fprintf(out, "Declare variable %c\n", 'a' + $2);
+    }
+    | FLOAT VARIABLE 
+    {
+        sym[$2] = 0;
+        sym_declared[$2] = 1;
+        sym_type[$2] = 1;
+        fprintf(out, "Declare variable %c (float)\n", 'a' + $2);
+    }
+    | DOUBLE VARIABLE 
+    {
+        sym[$2] = 0;
+        sym_declared[$2] = 1;
+        sym_type[$2] = 2;
+        fprintf(out, "Declare variable %c (double)\n", 'a' + $2);
     }
 ;
 
 init_declaration:
     INT VARIABLE '=' expression 
     {
+        if($4 != (int)$4) {
+            char msg[100];
+            sprintf(msg, "Type mismatch: Cannot assign floating-point value to int variable '%c'", 'a' + $2);
+            write_error(msg);
+        }
+        sym[$2] = (int)$4;
+        sym_declared[$2] = 1;
+        sym_type[$2] = 0;
+        fprintf(out, "Declare and init %c = %d\n", 'a' + $2, sym[$2]);
+    }
+    | FLOAT VARIABLE '=' expression 
+    {
         sym[$2] = $4;
         sym_declared[$2] = 1;
-        fprintf(out, "Declare and init %c = %d\n", 'a' + $2, $4);
+        sym_type[$2] = 1;
+        fprintf(out, "Declare and init %c = %d (float)\n", 'a' + $2, sym[$2]);
+    }
+    | DOUBLE VARIABLE '=' expression 
+    {
+        sym[$2] = $4;
+        sym_declared[$2] = 1;
+        sym_type[$2] = 2;
+        fprintf(out, "Declare and init %c = %d (double)\n", 'a' + $2, sym[$2]);
     }
 ;
 
 assignment:
     VARIABLE '=' expression 
     {
+        if(sym_declared[$1]) {
+            if(sym_type[$1] == 0 && $3 != (int)$3) {
+                char msg[100];
+                sprintf(msg, "Type mismatch: Cannot assign floating-point value to int variable '%c'", 'a' + $1);
+                write_error(msg);
+            }
+        }
         sym[$1] = $3;
         if(!sym_declared[$1]) {
             sym_declared[$1] = 1;
@@ -97,7 +140,6 @@ print_stmt:
     }
 ;
 
-/* UPDATED: Added support for else-if */
 if_stmt:
     simple_if
     | if_else
@@ -127,6 +169,14 @@ if_else_if:
 
 expression:
     NUMBER 
+    { 
+        $$ = $1; 
+    }
+    | FLOAT_NUM
+    { 
+        $$ = $1; 
+    }
+    | DOUBLE_NUM
     { 
         $$ = $1; 
     }
@@ -239,6 +289,7 @@ int main() {
     for(int i = 0; i < 26; i++) {
         sym_declared[i] = 0;
         sym[i] = 0;
+        sym_type[i] = 0;
     }
     
     yyin = fopen("in.txt", "r");

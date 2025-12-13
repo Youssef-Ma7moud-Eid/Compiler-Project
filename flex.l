@@ -13,6 +13,8 @@ void scanner_error(const char *msg);
 "void"       { return VOID; }
 "main"       { return MAIN; }
 "int"        { return INT; }
+"float"      { return FLOAT; }
+"double"     { return DOUBLE; }
 "print"      { return PRINT; }
 "if"         { return IF; }
 "else"       { return ELSE; }
@@ -29,6 +31,16 @@ void scanner_error(const char *msg);
 [a-z] {
     yylval = *yytext - 'a';
     return VARIABLE;
+}
+
+[0-9]+\.[0-9]+[fF] {
+    yylval = (int)(atof(yytext) * 100);
+    return FLOAT_NUM;
+}
+
+[0-9]+\.[0-9]+ {
+    yylval = (int)(atof(yytext) * 100);
+    return DOUBLE_NUM;
 }
 
 [0-9]+ {
