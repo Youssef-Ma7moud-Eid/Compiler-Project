@@ -55,8 +55,8 @@
      LE = 271,
      AND = 272,
      OR = 273,
-     VARIABLE = 274,
-     NUMBER = 275,
+     NUMBER = 274,
+     VARIABLE = 275,
      FLOAT_NUM = 276,
      DOUBLE_NUM = 277,
      UMINUS = 278
@@ -66,7 +66,21 @@
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+{
+
+/* Line 1676 of yacc.c  */
+#line 22 "parser.y"
+
+    int    ival;
+    float  fval;
+    double dval;
+
+
+
+/* Line 1676 of yacc.c  */
+#line 83 "parser.tab.h"
+} YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

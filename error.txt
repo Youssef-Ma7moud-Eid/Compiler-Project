@@ -1,3 +1,4 @@
 === Error Log ===
 
+Line 3: Type mismatch: float/double to int
 Line 22: Division by zero

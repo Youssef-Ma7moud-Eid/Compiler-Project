@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "parser.tab.h"
-extern YYSTYPE yylval;
 
 int line_num = 1;
 void scanner_error(const char *msg);
@@ -10,41 +9,41 @@ void scanner_error(const char *msg);
 
 %%
 
-"void"       { return VOID; }
-"main"       { return MAIN; }
-"int"        { return INT; }
-"float"      { return FLOAT; }
-"double"     { return DOUBLE; }
-"print"      { return PRINT; }
-"if"         { return IF; }
-"else"       { return ELSE; }
+"void"      { return VOID; }
+"main"      { return MAIN; }
+"int"       { return INT; }
+"float"     { return FLOAT; }
+"double"    { return DOUBLE; }
+"print"     { return PRINT; }
+"if"        { return IF; }
+"else"      { return ELSE; }
 
-"=="         { return EQ; }
-"!="         { return NE; }
-">="         { return GE; }
-"<="         { return LE; }
-">"          { return GT; }
-"<"          { return LT; }
-"&&"         { return AND; }
-"||"         { return OR; }
+"=="        { return EQ; }
+"!="        { return NE; }
+">="        { return GE; }
+"<="        { return LE; }
+">"         { return GT; }
+"<"         { return LT; }
+"&&"        { return AND; }
+"||"        { return OR; }
 
 [a-z] {
-    yylval = *yytext - 'a';
+    yylval.ival = *yytext - 'a';
     return VARIABLE;
 }
 
 [0-9]+\.[0-9]+[fF] {
-    yylval = (int)(atof(yytext) * 100);
+    yylval.fval = (float)atof(yytext);
     return FLOAT_NUM;
 }
 
 [0-9]+\.[0-9]+ {
-    yylval = (int)(atof(yytext) * 100);
+    yylval.dval = atof(yytext);
     return DOUBLE_NUM;
 }
 
 [0-9]+ {
-    yylval = atoi(yytext);
+    yylval.ival = atoi(yytext);
     return NUMBER;
 }
 
@@ -52,26 +51,18 @@ void scanner_error(const char *msg);
     return *yytext;
 }
 
-";"          { return ';'; }
+[ \t]+    { /* ignore spaces */ }
+\n        { line_num++; }
+"//".*    { /* ignore comments */ }
 
-[ \t]+       { /* ignore spaces and tabs */ }
-\n           { line_num++; }
-"//".*       { /* ignore comments */ }
-
-.            {
+. {
     scanner_error("Unknown character");
-    return -1;
 }
 
 %%
 
 void scanner_error(const char *msg) {
-    FILE *err = fopen("error.txt", "a");
-    if(err) {
-        fprintf(err, "Line %d: Scanner Error - %s '%s'\n", line_num, msg, yytext);
-        fclose(err);
-    }
-    printf("Line %d: Scanner Error - %s '%s'\n", line_num, msg, yytext);
+    printf("Line %d: Scanner error: %s (%s)\n", line_num, msg, yytext);
 }
 
 int yywrap() {

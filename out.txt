@@ -1,13 +1,14 @@
 === Compiler Output ===
 
+Declare and init s = 5
 Declare variable x
 Unary minus: -8 = -8
 Sub: -8 - 5 = -13
 Declare and init y = -13
-Declare and init z = 666 (double)
-Print: 666
-Declare and init f = 314 (float)
-Print: 314
+Declare and init z = 6.66416 (double)
+Print: 6.66416
+Declare and init f = 3.14 (float)
+Print: 3.14
 Logical NOT: !5 = 0
 Assign x = 0
 Logical NOT: !0 = 1
@@ -29,12 +30,16 @@ OR: 6 || 0 = 1
 LT: 9 < 0 = 0
 Logical NOT: !5 = 0
 OR: 1 || 5 = 1
-If-else condition = 0
-If-else-if condition = 1
-If-else-if condition = 1
+New condition = 0
+else-if condition = 0
+New condition = 1
+If or  else-if condition = 1
+New condition = 1
+If or  else-if condition = 1
 
 === Symbol Table ===
-f = 314
+f = 3.14
+s = 5
 x = 0
 y = 1
-z = 666
+z = 6.66416

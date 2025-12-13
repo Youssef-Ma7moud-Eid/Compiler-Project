@@ -1,6 +1,6 @@
 void main() {
     // Declaring 
-   
+   int s =5.6;
     int x;
     // Declaring and Initializing
     int y = - 8 - 5  ;
