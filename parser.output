@@ -1,0 +1,1260 @@
+Terminals unused in grammar
+
+   NE
+   GE
+   LE
+   AND
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: VOID MAIN '(' ')' '{' statements '}'
+
+    2 statements: /* empty */
+    3           | statements statement
+
+    4 statement: declaration ';'
+    5          | init_declaration ';'
+    6          | assignment ';'
+    7          | print_stmt ';'
+    8          | if_stmt
+    9          | expression ';'
+   10          | '{' statements '}'
+
+   11 declaration: INT VARIABLE
+   12            | FLOAT VARIABLE
+   13            | DOUBLE VARIABLE
+
+   14 init_declaration: INT VARIABLE '=' expression
+   15                 | FLOAT VARIABLE '=' expression
+   16                 | DOUBLE VARIABLE '=' expression
+
+   17 assignment: VARIABLE '=' expression
+
+   18 print_stmt: PRINT '(' expression ')'
+
+   19 if_stmt: simple_if
+   20        | if_else
+   21        | if_else_if
+
+   22 simple_if: IF '(' expression ')' '{' statements '}'
+
+   23 if_else: IF '(' expression ')' '{' statements '}' ELSE '{' statements '}'
+
+   24 if_else_if: IF '(' expression ')' '{' statements '}' ELSE if_stmt
+
+   25 expression: NUMBER
+   26           | FLOAT_NUM
+   27           | DOUBLE_NUM
+   28           | VARIABLE
+   29           | '!' expression
+   30           | '-' expression
+   31           | expression '+' expression
+   32           | expression '-' expression
+   33           | expression '*' expression
+   34           | expression '/' expression
+   35           | expression GT expression
+   36           | expression LT expression
+   37           | expression EQ expression
+   38           | expression OR expression
+   39           | '(' expression ')'
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+'!' (33) 29
+'(' (40) 1 18 22 23 24 39
+')' (41) 1 18 22 23 24 39
+'*' (42) 33
+'+' (43) 31
+'-' (45) 30 32
+'/' (47) 34
+';' (59) 4 5 6 7 9
+'=' (61) 14 15 16 17
+'{' (123) 1 10 22 23 24
+'}' (125) 1 10 22 23 24
+error (256)
+VOID (258) 1
+MAIN (259) 1
+INT (260) 11 14
+FLOAT (261) 12 15
+DOUBLE (262) 13 16
+PRINT (263) 18
+IF (264) 22 23 24
+ELSE (265) 23 24
+EQ (266) 37
+NE (267)
+GT (268) 35
+LT (269) 36
+GE (270)
+LE (271)
+AND (272)
+OR (273) 38
+NUMBER (274) 25
+VARIABLE (275) 11 12 13 14 15 16 17 28
+FLOAT_NUM (276) 26
+DOUBLE_NUM (277) 27
+UMINUS (278)
+
+
+Nonterminals, with rules where they appear
+
+$accept (35)
+    on left: 0
+program (36)
+    on left: 1, on right: 0
+statements (37)
+    on left: 2 3, on right: 1 3 10 22 23 24
+statement (38)
+    on left: 4 5 6 7 8 9 10, on right: 3
+declaration (39)
+    on left: 11 12 13, on right: 4
+init_declaration (40)
+    on left: 14 15 16, on right: 5
+assignment (41)
+    on left: 17, on right: 6
+print_stmt (42)
+    on left: 18, on right: 7
+if_stmt (43)
+    on left: 19 20 21, on right: 8 24
+simple_if (44)
+    on left: 22, on right: 19
+if_else (45)
+    on left: 23, on right: 20
+if_else_if (46)
+    on left: 24, on right: 21
+expression (47)
+    on left: 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39, on right:
+    9 14 15 16 17 18 22 23 24 29 30 31 32 33 34 35 36 37 38 39
+
+
+state 0
+
+    0 $accept: . program $end
+
+    VOID  shift, and go to state 1
+
+    program  go to state 2
+
+
+state 1
+
+    1 program: VOID . MAIN '(' ')' '{' statements '}'
+
+    MAIN  shift, and go to state 3
+
+
+state 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 4
+
+
+state 3
+
+    1 program: VOID MAIN . '(' ')' '{' statements '}'
+
+    '('  shift, and go to state 5
+
+
+state 4
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+state 5
+
+    1 program: VOID MAIN '(' . ')' '{' statements '}'
+
+    ')'  shift, and go to state 6
+
+
+state 6
+
+    1 program: VOID MAIN '(' ')' . '{' statements '}'
+
+    '{'  shift, and go to state 7
+
+
+state 7
+
+    1 program: VOID MAIN '(' ')' '{' . statements '}'
+
+    $default  reduce using rule 2 (statements)
+
+    statements  go to state 8
+
+
+state 8
+
+    1 program: VOID MAIN '(' ')' '{' statements . '}'
+    3 statements: statements . statement
+
+    INT         shift, and go to state 9
+    FLOAT       shift, and go to state 10
+    DOUBLE      shift, and go to state 11
+    PRINT       shift, and go to state 12
+    IF          shift, and go to state 13
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 15
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+    '{'         shift, and go to state 21
+    '}'         shift, and go to state 22
+
+    statement         go to state 23
+    declaration       go to state 24
+    init_declaration  go to state 25
+    assignment        go to state 26
+    print_stmt        go to state 27
+    if_stmt           go to state 28
+    simple_if         go to state 29
+    if_else           go to state 30
+    if_else_if        go to state 31
+    expression        go to state 32
+
+
+state 9
+
+   11 declaration: INT . VARIABLE
+   14 init_declaration: INT . VARIABLE '=' expression
+
+    VARIABLE  shift, and go to state 33
+
+
+state 10
+
+   12 declaration: FLOAT . VARIABLE
+   15 init_declaration: FLOAT . VARIABLE '=' expression
+
+    VARIABLE  shift, and go to state 34
+
+
+state 11
+
+   13 declaration: DOUBLE . VARIABLE
+   16 init_declaration: DOUBLE . VARIABLE '=' expression
+
+    VARIABLE  shift, and go to state 35
+
+
+state 12
+
+   18 print_stmt: PRINT . '(' expression ')'
+
+    '('  shift, and go to state 36
+
+
+state 13
+
+   22 simple_if: IF . '(' expression ')' '{' statements '}'
+   23 if_else: IF . '(' expression ')' '{' statements '}' ELSE '{' statements '}'
+   24 if_else_if: IF . '(' expression ')' '{' statements '}' ELSE if_stmt
+
+    '('  shift, and go to state 37
+
+
+state 14
+
+   25 expression: NUMBER .
+
+    $default  reduce using rule 25 (expression)
+
+
+state 15
+
+   17 assignment: VARIABLE . '=' expression
+   28 expression: VARIABLE .
+
+    '='  shift, and go to state 38
+
+    $default  reduce using rule 28 (expression)
+
+
+state 16
+
+   26 expression: FLOAT_NUM .
+
+    $default  reduce using rule 26 (expression)
+
+
+state 17
+
+   27 expression: DOUBLE_NUM .
+
+    $default  reduce using rule 27 (expression)
+
+
+state 18
+
+   30 expression: '-' . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 40
+
+
+state 19
+
+   29 expression: '!' . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 41
+
+
+state 20
+
+   39 expression: '(' . expression ')'
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 42
+
+
+state 21
+
+   10 statement: '{' . statements '}'
+
+    $default  reduce using rule 2 (statements)
+
+    statements  go to state 43
+
+
+state 22
+
+    1 program: VOID MAIN '(' ')' '{' statements '}' .
+
+    $default  reduce using rule 1 (program)
+
+
+state 23
+
+    3 statements: statements statement .
+
+    $default  reduce using rule 3 (statements)
+
+
+state 24
+
+    4 statement: declaration . ';'
+
+    ';'  shift, and go to state 44
+
+
+state 25
+
+    5 statement: init_declaration . ';'
+
+    ';'  shift, and go to state 45
+
+
+state 26
+
+    6 statement: assignment . ';'
+
+    ';'  shift, and go to state 46
+
+
+state 27
+
+    7 statement: print_stmt . ';'
+
+    ';'  shift, and go to state 47
+
+
+state 28
+
+    8 statement: if_stmt .
+
+    $default  reduce using rule 8 (statement)
+
+
+state 29
+
+   19 if_stmt: simple_if .
+
+    $default  reduce using rule 19 (if_stmt)
+
+
+state 30
+
+   20 if_stmt: if_else .
+
+    $default  reduce using rule 20 (if_stmt)
+
+
+state 31
+
+   21 if_stmt: if_else_if .
+
+    $default  reduce using rule 21 (if_stmt)
+
+
+state 32
+
+    9 statement: expression . ';'
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    EQ   shift, and go to state 48
+    GT   shift, and go to state 49
+    LT   shift, and go to state 50
+    OR   shift, and go to state 51
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+    ';'  shift, and go to state 56
+
+
+state 33
+
+   11 declaration: INT VARIABLE .
+   14 init_declaration: INT VARIABLE . '=' expression
+
+    '='  shift, and go to state 57
+
+    $default  reduce using rule 11 (declaration)
+
+
+state 34
+
+   12 declaration: FLOAT VARIABLE .
+   15 init_declaration: FLOAT VARIABLE . '=' expression
+
+    '='  shift, and go to state 58
+
+    $default  reduce using rule 12 (declaration)
+
+
+state 35
+
+   13 declaration: DOUBLE VARIABLE .
+   16 init_declaration: DOUBLE VARIABLE . '=' expression
+
+    '='  shift, and go to state 59
+
+    $default  reduce using rule 13 (declaration)
+
+
+state 36
+
+   18 print_stmt: PRINT '(' . expression ')'
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 60
+
+
+state 37
+
+   22 simple_if: IF '(' . expression ')' '{' statements '}'
+   23 if_else: IF '(' . expression ')' '{' statements '}' ELSE '{' statements '}'
+   24 if_else_if: IF '(' . expression ')' '{' statements '}' ELSE if_stmt
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 61
+
+
+state 38
+
+   17 assignment: VARIABLE '=' . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 62
+
+
+state 39
+
+   28 expression: VARIABLE .
+
+    $default  reduce using rule 28 (expression)
+
+
+state 40
+
+   30 expression: '-' expression .
+   31           | expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    $default  reduce using rule 30 (expression)
+
+
+state 41
+
+   29 expression: '!' expression .
+   31           | expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    $default  reduce using rule 29 (expression)
+
+
+state 42
+
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+   39           | '(' expression . ')'
+
+    EQ   shift, and go to state 48
+    GT   shift, and go to state 49
+    LT   shift, and go to state 50
+    OR   shift, and go to state 51
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+    ')'  shift, and go to state 63
+
+
+state 43
+
+    3 statements: statements . statement
+   10 statement: '{' statements . '}'
+
+    INT         shift, and go to state 9
+    FLOAT       shift, and go to state 10
+    DOUBLE      shift, and go to state 11
+    PRINT       shift, and go to state 12
+    IF          shift, and go to state 13
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 15
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+    '{'         shift, and go to state 21
+    '}'         shift, and go to state 64
+
+    statement         go to state 23
+    declaration       go to state 24
+    init_declaration  go to state 25
+    assignment        go to state 26
+    print_stmt        go to state 27
+    if_stmt           go to state 28
+    simple_if         go to state 29
+    if_else           go to state 30
+    if_else_if        go to state 31
+    expression        go to state 32
+
+
+state 44
+
+    4 statement: declaration ';' .
+
+    $default  reduce using rule 4 (statement)
+
+
+state 45
+
+    5 statement: init_declaration ';' .
+
+    $default  reduce using rule 5 (statement)
+
+
+state 46
+
+    6 statement: assignment ';' .
+
+    $default  reduce using rule 6 (statement)
+
+
+state 47
+
+    7 statement: print_stmt ';' .
+
+    $default  reduce using rule 7 (statement)
+
+
+state 48
+
+   37 expression: expression EQ . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 65
+
+
+state 49
+
+   35 expression: expression GT . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 66
+
+
+state 50
+
+   36 expression: expression LT . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 67
+
+
+state 51
+
+   38 expression: expression OR . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 68
+
+
+state 52
+
+   31 expression: expression '+' . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 69
+
+
+state 53
+
+   32 expression: expression '-' . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 70
+
+
+state 54
+
+   33 expression: expression '*' . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 71
+
+
+state 55
+
+   34 expression: expression '/' . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 72
+
+
+state 56
+
+    9 statement: expression ';' .
+
+    $default  reduce using rule 9 (statement)
+
+
+state 57
+
+   14 init_declaration: INT VARIABLE '=' . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 73
+
+
+state 58
+
+   15 init_declaration: FLOAT VARIABLE '=' . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 74
+
+
+state 59
+
+   16 init_declaration: DOUBLE VARIABLE '=' . expression
+
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 39
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+
+    expression  go to state 75
+
+
+state 60
+
+   18 print_stmt: PRINT '(' expression . ')'
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    EQ   shift, and go to state 48
+    GT   shift, and go to state 49
+    LT   shift, and go to state 50
+    OR   shift, and go to state 51
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+    ')'  shift, and go to state 76
+
+
+state 61
+
+   22 simple_if: IF '(' expression . ')' '{' statements '}'
+   23 if_else: IF '(' expression . ')' '{' statements '}' ELSE '{' statements '}'
+   24 if_else_if: IF '(' expression . ')' '{' statements '}' ELSE if_stmt
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    EQ   shift, and go to state 48
+    GT   shift, and go to state 49
+    LT   shift, and go to state 50
+    OR   shift, and go to state 51
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+    ')'  shift, and go to state 77
+
+
+state 62
+
+   17 assignment: VARIABLE '=' expression .
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    EQ   shift, and go to state 48
+    GT   shift, and go to state 49
+    LT   shift, and go to state 50
+    OR   shift, and go to state 51
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+
+    $default  reduce using rule 17 (assignment)
+
+
+state 63
+
+   39 expression: '(' expression ')' .
+
+    $default  reduce using rule 39 (expression)
+
+
+state 64
+
+   10 statement: '{' statements '}' .
+
+    $default  reduce using rule 10 (statement)
+
+
+state 65
+
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   37           | expression EQ expression .
+   38           | expression . OR expression
+
+    GT   shift, and go to state 49
+    LT   shift, and go to state 50
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+
+    $default  reduce using rule 37 (expression)
+
+
+state 66
+
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   35           | expression GT expression .
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+
+    $default  reduce using rule 35 (expression)
+
+
+state 67
+
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   36           | expression LT expression .
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+
+    $default  reduce using rule 36 (expression)
+
+
+state 68
+
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+   38           | expression OR expression .
+
+    EQ   shift, and go to state 48
+    GT   shift, and go to state 49
+    LT   shift, and go to state 50
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+
+    $default  reduce using rule 38 (expression)
+
+
+state 69
+
+   31 expression: expression . '+' expression
+   31           | expression '+' expression .
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+
+    $default  reduce using rule 31 (expression)
+
+
+state 70
+
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   32           | expression '-' expression .
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+
+    $default  reduce using rule 32 (expression)
+
+
+state 71
+
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   33           | expression '*' expression .
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    $default  reduce using rule 33 (expression)
+
+
+state 72
+
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   34           | expression '/' expression .
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    $default  reduce using rule 34 (expression)
+
+
+state 73
+
+   14 init_declaration: INT VARIABLE '=' expression .
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    EQ   shift, and go to state 48
+    GT   shift, and go to state 49
+    LT   shift, and go to state 50
+    OR   shift, and go to state 51
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+
+    $default  reduce using rule 14 (init_declaration)
+
+
+state 74
+
+   15 init_declaration: FLOAT VARIABLE '=' expression .
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    EQ   shift, and go to state 48
+    GT   shift, and go to state 49
+    LT   shift, and go to state 50
+    OR   shift, and go to state 51
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+
+    $default  reduce using rule 15 (init_declaration)
+
+
+state 75
+
+   16 init_declaration: DOUBLE VARIABLE '=' expression .
+   31 expression: expression . '+' expression
+   32           | expression . '-' expression
+   33           | expression . '*' expression
+   34           | expression . '/' expression
+   35           | expression . GT expression
+   36           | expression . LT expression
+   37           | expression . EQ expression
+   38           | expression . OR expression
+
+    EQ   shift, and go to state 48
+    GT   shift, and go to state 49
+    LT   shift, and go to state 50
+    OR   shift, and go to state 51
+    '+'  shift, and go to state 52
+    '-'  shift, and go to state 53
+    '*'  shift, and go to state 54
+    '/'  shift, and go to state 55
+
+    $default  reduce using rule 16 (init_declaration)
+
+
+state 76
+
+   18 print_stmt: PRINT '(' expression ')' .
+
+    $default  reduce using rule 18 (print_stmt)
+
+
+state 77
+
+   22 simple_if: IF '(' expression ')' . '{' statements '}'
+   23 if_else: IF '(' expression ')' . '{' statements '}' ELSE '{' statements '}'
+   24 if_else_if: IF '(' expression ')' . '{' statements '}' ELSE if_stmt
+
+    '{'  shift, and go to state 78
+
+
+state 78
+
+   22 simple_if: IF '(' expression ')' '{' . statements '}'
+   23 if_else: IF '(' expression ')' '{' . statements '}' ELSE '{' statements '}'
+   24 if_else_if: IF '(' expression ')' '{' . statements '}' ELSE if_stmt
+
+    $default  reduce using rule 2 (statements)
+
+    statements  go to state 79
+
+
+state 79
+
+    3 statements: statements . statement
+   22 simple_if: IF '(' expression ')' '{' statements . '}'
+   23 if_else: IF '(' expression ')' '{' statements . '}' ELSE '{' statements '}'
+   24 if_else_if: IF '(' expression ')' '{' statements . '}' ELSE if_stmt
+
+    INT         shift, and go to state 9
+    FLOAT       shift, and go to state 10
+    DOUBLE      shift, and go to state 11
+    PRINT       shift, and go to state 12
+    IF          shift, and go to state 13
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 15
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+    '{'         shift, and go to state 21
+    '}'         shift, and go to state 80
+
+    statement         go to state 23
+    declaration       go to state 24
+    init_declaration  go to state 25
+    assignment        go to state 26
+    print_stmt        go to state 27
+    if_stmt           go to state 28
+    simple_if         go to state 29
+    if_else           go to state 30
+    if_else_if        go to state 31
+    expression        go to state 32
+
+
+state 80
+
+   22 simple_if: IF '(' expression ')' '{' statements '}' .
+   23 if_else: IF '(' expression ')' '{' statements '}' . ELSE '{' statements '}'
+   24 if_else_if: IF '(' expression ')' '{' statements '}' . ELSE if_stmt
+
+    ELSE  shift, and go to state 81
+
+    $default  reduce using rule 22 (simple_if)
+
+
+state 81
+
+   23 if_else: IF '(' expression ')' '{' statements '}' ELSE . '{' statements '}'
+   24 if_else_if: IF '(' expression ')' '{' statements '}' ELSE . if_stmt
+
+    IF   shift, and go to state 13
+    '{'  shift, and go to state 82
+
+    if_stmt     go to state 83
+    simple_if   go to state 29
+    if_else     go to state 30
+    if_else_if  go to state 31
+
+
+state 82
+
+   23 if_else: IF '(' expression ')' '{' statements '}' ELSE '{' . statements '}'
+
+    $default  reduce using rule 2 (statements)
+
+    statements  go to state 84
+
+
+state 83
+
+   24 if_else_if: IF '(' expression ')' '{' statements '}' ELSE if_stmt .
+
+    $default  reduce using rule 24 (if_else_if)
+
+
+state 84
+
+    3 statements: statements . statement
+   23 if_else: IF '(' expression ')' '{' statements '}' ELSE '{' statements . '}'
+
+    INT         shift, and go to state 9
+    FLOAT       shift, and go to state 10
+    DOUBLE      shift, and go to state 11
+    PRINT       shift, and go to state 12
+    IF          shift, and go to state 13
+    NUMBER      shift, and go to state 14
+    VARIABLE    shift, and go to state 15
+    FLOAT_NUM   shift, and go to state 16
+    DOUBLE_NUM  shift, and go to state 17
+    '-'         shift, and go to state 18
+    '!'         shift, and go to state 19
+    '('         shift, and go to state 20
+    '{'         shift, and go to state 21
+    '}'         shift, and go to state 85
+
+    statement         go to state 23
+    declaration       go to state 24
+    init_declaration  go to state 25
+    assignment        go to state 26
+    print_stmt        go to state 27
+    if_stmt           go to state 28
+    simple_if         go to state 29
+    if_else           go to state 30
+    if_else_if        go to state 31
+    expression        go to state 32
+
+
+state 85
+
+   23 if_else: IF '(' expression ')' '{' statements '}' ELSE '{' statements '}' .
+
+    $default  reduce using rule 23 (if_else)
